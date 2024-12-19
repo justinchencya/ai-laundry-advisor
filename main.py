@@ -64,14 +64,31 @@ async def analyze_label(file: UploadFile):
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a laundry assistant responsible for advising on how to clean clothes properly. You always keep your answers simple and easy to understand."
+                        "content": """You are a laundry care advisor. Be extremely concise and clear. For each section, provide only the most important information in a single bullet point.
+
+Format your response using these exact headers, with one bullet point per section:
+
+## Water Temperature
+• [Single most appropriate temperature]
+
+## Washing Method
+• [One key washing instruction]
+
+## Drying
+• [One key drying instruction]
+
+## Ironing
+• [One key ironing instruction]
+
+## Special Care
+• [One key special instruction, if needed]"""
                     },
                     {
                         "role": "user",
                         "content": [
                             {
                                 "type": "text",
-                                "text": "According to these washing symbols, how should I clean this clothes? Please include: water temperature, washing method, drying instructions, ironing recommendations, and any special care instructions."
+                                "text": "What are the essential care instructions for this garment?"
                             },
                             {
                                 "type": "image_url",
@@ -82,7 +99,7 @@ async def analyze_label(file: UploadFile):
                         ]
                     }
                 ],
-                max_tokens=300
+                max_tokens=200
             )
 
             if not response.choices or not response.choices[0].message.content:

@@ -1,15 +1,24 @@
 import { useState, useRef } from 'react'
+import ReactMarkdown from 'react-markdown'
 import './App.css'
 
 function App() {
   const [analysis, setAnalysis] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>('')
+  const [imagePreview, setImagePreview] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
+
+    // Create image preview
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string)
+    }
+    reader.readAsDataURL(file)
 
     setLoading(true)
     setError('')
@@ -81,10 +90,21 @@ function App() {
         </div>
       )}
       
+      {imagePreview && (
+        <div className="image-preview">
+          <h2>Uploaded Image:</h2>
+          <img src={imagePreview} alt="Laundry care label" />
+        </div>
+      )}
+      
       {analysis && (
         <div className="analysis-result">
           <h2>Washing Instructions:</h2>
-          <p>{analysis}</p>
+          <div className="instructions-container">
+            <ReactMarkdown className="markdown-content">
+              {analysis}
+            </ReactMarkdown>
+          </div>
         </div>
       )}
     </div>

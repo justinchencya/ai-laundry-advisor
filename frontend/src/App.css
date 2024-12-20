@@ -78,21 +78,50 @@ button {
   background-color: #3498db;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem;
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
   background-color: #2980b9;
+  transform: scale(1.05);
 }
 
+/* Loading Spinner */
 .loading {
-  color: #7f8c8d;
-  margin: 1rem 0;
-  font-style: italic;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 1rem auto;
+}
+
+.loading:after {
+  content: " ";
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 3px solid #3498db;
+  border-color: #3498db transparent #3498db transparent;
+  animation: loading 1.2s linear infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error {
@@ -115,7 +144,7 @@ button:hover {
   max-width: 100%;
   max-height: 400px;
   border-radius: 8px;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .analysis-result {

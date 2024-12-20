@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
+import { IoCamera } from 'react-icons/io5'
+import { IoImagesOutline } from 'react-icons/io5'
 import './App.css'
 
 // Backend URL using local IP address
@@ -81,16 +83,22 @@ function App() {
           capture="environment"
         />
         
-        <button onClick={() => fileInputRef.current?.click()}>
-          Upload Image
+        <button 
+          onClick={() => fileInputRef.current?.click()}
+          title="Upload from gallery"
+        >
+          <IoImagesOutline size={24} />
         </button>
         
-        <button onClick={() => cameraInputRef.current?.click()}>
-          Take Photo
+        <button 
+          onClick={() => cameraInputRef.current?.click()}
+          title="Take photo"
+        >
+          <IoCamera size={24} />
         </button>
       </div>
 
-      {loading && <div className="loading">Analyzing image...</div>}
+      {loading && <div className="loading" />}
       
       {error && (
         <div className="error">
@@ -102,7 +110,6 @@ function App() {
       
       {imagePreview && (
         <div className="image-preview">
-          <h2>Uploaded Image:</h2>
           <img src={imagePreview} alt="Laundry care label" />
         </div>
       )}

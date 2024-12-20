@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { IoCamera } from 'react-icons/io5'
 import { IoImagesOutline } from 'react-icons/io5'
@@ -12,8 +12,20 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>('')
   const [imagePreview, setImagePreview] = useState<string>('')
+  const [isMobile, setIsMobile] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    // Check if device is mobile
+    const checkDevice = () => {
+      const userAgent = navigator.userAgent.toLowerCase()
+      const isMobileDevice = /mobile|android|ios|iphone|ipad|ipod|windows phone/i.test(userAgent)
+      setIsMobile(isMobileDevice)
+    }
+
+    checkDevice()
+  }, [])
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -74,14 +86,16 @@ function App() {
         />
         
         {/* Camera Input */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileUpload}
-          ref={cameraInputRef}
-          style={{ display: 'none' }}
-          capture="environment"
-        />
+        {isMobile && (
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+            ref={cameraInputRef}
+            style={{ display: 'none' }}
+            capture="environment"
+          />
+        )}
         
         <button 
           onClick={() => fileInputRef.current?.click()}
@@ -90,12 +104,14 @@ function App() {
           <IoImagesOutline size={24} />
         </button>
         
-        <button 
-          onClick={() => cameraInputRef.current?.click()}
-          title="Take photo"
-        >
-          <IoCamera size={24} />
-        </button>
+        {isMobile && (
+          <button 
+            onClick={() => cameraInputRef.current?.click()}
+            title="Take photo"
+          >
+            <IoCamera size={24} />
+          </button>
+        )}
       </div>
 
       {loading && <div className="loading" />}

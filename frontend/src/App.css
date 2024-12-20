@@ -106,12 +106,19 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* Common styles for all indicators (loading, success, error) */
+.loading, .success-check, .error-cross {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+}
+
 /* Loading Spinner */
 .loading {
   display: inline-block;
-  width: 50px;
-  height: 50px;
-  margin: 1rem auto;
 }
 
 .loading:after {
@@ -119,7 +126,7 @@ button:hover {
   display: block;
   width: 32px;
   height: 32px;
-  margin: 8px;
+  margin: 4px;
   border-radius: 50%;
   border: 3px solid #3498db;
   border-color: #3498db transparent #3498db transparent;
@@ -129,6 +136,85 @@ button:hover {
 @keyframes loading {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Success Check */
+.success-check {
+  animation: scale-up 0.5s ease-out;
+}
+
+.success-check:before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  border-left: 3px solid #2ecc71;
+  border-bottom: 3px solid #2ecc71;
+  transform: rotate(-45deg);
+  left: 10px;
+  top: 12px;
+  animation: check-animation 0.5s ease-in-out;
+}
+
+/* Error Cross */
+.error-cross {
+  animation: scale-up 0.5s ease-out;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+}
+
+.error-cross:before,
+.error-cross:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: #e74c3c;
+  left: 0;
+  top: 50%;
+}
+
+.error-cross:before {
+  transform: rotate(45deg);
+  animation: cross-animation-1 0.5s ease-in-out;
+}
+
+.error-cross:after {
+  transform: rotate(-45deg);
+  animation: cross-animation-2 0.5s ease-in-out;
+}
+
+@keyframes cross-animation-1 {
+  0% {
+    transform: rotate(45deg) scaleX(0);
+  }
+  100% {
+    transform: rotate(45deg) scaleX(1);
+  }
+}
+
+@keyframes cross-animation-2 {
+  0% {
+    transform: rotate(-45deg) scaleX(0);
+  }
+  100% {
+    transform: rotate(-45deg) scaleX(1);
+  }
+}
+
+@keyframes scale-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .error {
@@ -158,6 +244,11 @@ button:hover {
   object-fit: contain;
 }
 
+.image-preview img.blurred {
+  filter: blur(8px);
+  transition: filter 0.5s ease;
+}
+
 .image-overlay {
   position: absolute;
   top: 0;
@@ -168,75 +259,40 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
-/* Loading Spinner */
-.loading {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  margin: 1rem auto;
-}
-
-.loading:after {
-  content: " ";
-  display: block;
-  width: 32px;
-  height: 32px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 3px solid #3498db;
-  border-color: #3498db transparent #3498db transparent;
-  animation: loading 1.2s linear infinite;
-}
-
-@keyframes loading {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Success Check Animation */
-.success-check {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  animation: scale-up 0.5s ease-out;
-}
-
-.success-check:before {
-  content: '';
+.analysis-overlay {
   position: absolute;
-  width: 20px;
-  height: 10px;
-  border-left: 3px solid #2ecc71;
-  border-bottom: 3px solid #2ecc71;
-  transform: rotate(-45deg);
-  left: 10px;
-  top: 12px;
-  animation: check-animation 0.5s ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow-y: auto;
 }
 
-@keyframes check-animation {
-  0% {
-    opacity: 0;
-    transform: rotate(-45deg) scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: rotate(-45deg) scale(1);
-  }
+.analysis-overlay .markdown-content {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  margin: 0;
 }
 
-@keyframes scale-up {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.analysis-overlay .markdown-content h2 {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.analysis-overlay .markdown-content p {
+  margin: 0.5rem 0;
+  line-height: 1.4;
 }
 
 .analysis-result {
@@ -348,58 +404,6 @@ button:hover {
   border: none;
   border-top: 2px solid #ecf0f1;
   margin: 1.5rem 0;
-}
-
-/* Error Cross Animation */
-.error-cross {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  animation: scale-up 0.5s ease-out;
-}
-
-.error-cross:before,
-.error-cross:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  background-color: #e74c3c;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.error-cross:before {
-  transform: rotate(45deg);
-  animation: cross-animation-1 0.5s ease-in-out;
-}
-
-.error-cross:after {
-  transform: rotate(-45deg);
-  animation: cross-animation-2 0.5s ease-in-out;
-}
-
-@keyframes cross-animation-1 {
-  0% {
-    transform: rotate(45deg) scale(0);
-    opacity: 0;
-  }
-  100% {
-    transform: rotate(45deg) scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes cross-animation-2 {
-  0% {
-    transform: rotate(-45deg) scale(0);
-    opacity: 0;
-  }
-  100% {
-    transform: rotate(-45deg) scale(1);
-    opacity: 1;
-  }
 }
 
 .validation-message {

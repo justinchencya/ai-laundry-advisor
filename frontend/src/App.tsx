@@ -149,7 +149,11 @@ function App() {
       
       {imagePreview && (
         <div className="image-preview">
-          <img src={imagePreview} alt="Laundry care label" />
+          <img 
+            src={imagePreview} 
+            alt="Laundry care label" 
+            className={analysis ? 'blurred' : ''}
+          />
           {(loading || showSuccess || showError) && (
             <div className="image-overlay">
               {loading && <div className="loading" />}
@@ -162,16 +166,13 @@ function App() {
               <div className="validation-message">{validationMessage}</div>
             </div>
           )}
-        </div>
-      )}
-      
-      {analysis && (
-        <div className="analysis-result">
-          <div className="instructions-container">
-            <ReactMarkdown className="markdown-content">
-              {analysis}
-            </ReactMarkdown>
-          </div>
+          {analysis && (
+            <div className="analysis-overlay">
+              <ReactMarkdown className="markdown-content">
+                {analysis}
+              </ReactMarkdown>
+            </div>
+          )}
         </div>
       )}
     </div>

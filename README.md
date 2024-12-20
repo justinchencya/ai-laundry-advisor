@@ -33,59 +33,57 @@ npm install
 cd ..
 ```
 
-4. Create a `.env` file in the root directory and add your OpenAI API key:
+4. Set up environment variables:
+
+Backend:
+- Create a `.env` file in the root directory:
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
 
+Frontend:
+- The project uses two environment files:
+
+1. `frontend/.env` (committed to git):
+```
+VITE_BACKEND_URL=http://localhost:8000
+```
+This is the default configuration for local development.
+
+2. `frontend/.env.local` (not committed to git):
+```
+VITE_BACKEND_URL=http://your.ip.address:8000
+```
+Create this file for mobile testing, replacing `your.ip.address` with your computer's IP address.
+
 ## Running the App
 
 ### Desktop Usage
-
-1. Start the backend server (from the root directory):
-```bash
-uvicorn main:app --reload
-```
-
-2. Start the frontend development server (in a new terminal):
-```bash
-cd frontend
-npm run dev
-```
-
-3. Open your browser and navigate to:
-   - Frontend: http://localhost:5173
-   - Backend health check: http://localhost:8000/health
+No additional configuration needed - the default environment settings will work.
 
 ### Mobile Access (Phone)
 
-To access the app from your phone:
-
-1. Make sure your computer and phone are on the same WiFi network
-
-2. Find your computer's local IP address:
+1. Find your computer's local IP address:
    - On Mac/Linux: `ipconfig getifaddr en0` or `ip addr show`
    - On Windows: `ipconfig` and look for IPv4 Address
 
-3. Update the frontend code:
-   - Open `frontend/src/App.tsx`
-   - Change the `BACKEND_URL` to use your computer's IP address:
-     ```typescript
-     const BACKEND_URL = 'http://your.ip.address:8000'
-     ```
+2. Create `frontend/.env.local` with your IP:
+```
+VITE_BACKEND_URL=http://your.ip.address:8000
+```
 
-4. Start the backend server with host access:
+3. Start the backend server with host access:
 ```bash
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-5. Start the frontend server with host access:
+4. Start the frontend server with host access:
 ```bash
 cd frontend
 npm run dev -- --host
 ```
 
-6. On your phone:
+5. On your phone:
    - Open your browser
    - Navigate to `http://your.ip.address:5173`
    - Allow camera access if you want to take photos
@@ -101,6 +99,19 @@ npm run dev -- --host
    - Ironing recommendations
    - Special care instructions
 
+## Environment Files
+
+The project uses different environment files for configuration:
+
+- `.env`: Backend environment variables (OpenAI API key)
+- `frontend/.env`: Default frontend configuration (local development)
+- `frontend/.env.local`: Local overrides for frontend (mobile testing)
+
+Note: All `.env` files are excluded from git for security. Make sure to:
+1. Never commit environment files
+2. Keep your API keys secure
+3. Create appropriate `.env` files when setting up the project
+
 ## Troubleshooting
 
 - If you can't connect from your phone:
@@ -113,3 +124,11 @@ npm run dev -- --host
   - Verify your OpenAI API key is correct
   - Check if you have sufficient API credits
   - Ensure your API key has access to GPT-4 Vision
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

@@ -4,8 +4,12 @@ import { IoCamera } from 'react-icons/io5'
 import { IoImagesOutline } from 'react-icons/io5'
 import './App.css'
 
-// Backend URL using local IP address
-const BACKEND_URL = 'http://192.168.1.159:8000'
+// Backend URL from environment variable
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
+if (!BACKEND_URL) {
+  throw new Error('VITE_BACKEND_URL is not set in environment variables')
+}
 
 function App() {
   const [analysis, setAnalysis] = useState<string>('')

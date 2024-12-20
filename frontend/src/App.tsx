@@ -116,7 +116,6 @@ function App() {
       
       {analysis && (
         <div className="analysis-result">
-          <h2>Washing Instructions:</h2>
           <div className="instructions-container">
             <ReactMarkdown className="markdown-content">
               {analysis}

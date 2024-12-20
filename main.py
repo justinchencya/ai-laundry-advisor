@@ -67,8 +67,43 @@ async def analyze_label(file: UploadFile):
 
         base64_image = base64.b64encode(contents).decode('utf-8')
 
-        # Call OpenAI Vision API
+        # First, validate if the image contains laundry care labels
         try:
+            validation_response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are an image validator for laundry care labels. Your task is to determine if the image contains valid laundry care symbols/labels. Respond with only 'valid' or 'invalid', followed by a brief reason."
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "Is this a valid image of laundry care labels?"
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{base64_image}"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                max_tokens=50
+            )
+
+            validation_result = validation_response.choices[0].message.content.lower()
+            
+            if not validation_result.startswith('valid'):
+                return JSONResponse(content={
+                    "valid": False,
+                    "message": validation_result
+                })
+
+            # If valid, proceed with the analysis
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
@@ -112,13 +147,8 @@ Format your response using these exact headers, with one bullet point per sectio
                 max_tokens=200
             )
 
-            if not response.choices or not response.choices[0].message.content:
-                raise HTTPException(
-                    status_code=500,
-                    detail="No response received from OpenAI API"
-                )
-
             return JSONResponse(content={
+                "valid": True,
                 "analysis": response.choices[0].message.content
             })
 

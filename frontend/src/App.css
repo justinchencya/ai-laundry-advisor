@@ -349,3 +349,97 @@ button:hover {
   border-top: 2px solid #ecf0f1;
   margin: 1.5rem 0;
 }
+
+/* Error Cross Animation */
+.error-cross {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  animation: scale-up 0.5s ease-out;
+}
+
+.error-cross:before,
+.error-cross:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: #e74c3c;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.error-cross:before {
+  transform: rotate(45deg);
+  animation: cross-animation-1 0.5s ease-in-out;
+}
+
+.error-cross:after {
+  transform: rotate(-45deg);
+  animation: cross-animation-2 0.5s ease-in-out;
+}
+
+@keyframes cross-animation-1 {
+  0% {
+    transform: rotate(45deg) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(45deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cross-animation-2 {
+  0% {
+    transform: rotate(-45deg) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(-45deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.validation-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #e74c3c;
+  font-size: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 300px;
+  animation: message-fade-in 0.5s ease-out;
+  z-index: 10;
+}
+
+@keyframes message-fade-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}

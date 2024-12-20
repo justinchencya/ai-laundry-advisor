@@ -11,9 +11,12 @@ function App() {
   const [analysis, setAnalysis] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [validationMessage, setValidationMessage] = useState('')
   const [error, setError] = useState<string>('')
   const [imagePreview, setImagePreview] = useState<string>('')
   const [isMobile, setIsMobile] = useState(false)
+  const [isInvalidImage, setIsInvalidImage] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
 
@@ -42,7 +45,10 @@ function App() {
     setLoading(true)
     setError('')
     setShowSuccess(false)
+    setShowError(false)
+    setValidationMessage('')
     setAnalysis('')
+    setIsInvalidImage(false)
 
     const formData = new FormData()
     formData.append('file', file)
@@ -62,10 +68,19 @@ function App() {
       }
 
       const data = await response.json()
-      if (!data.analysis) {
-        throw new Error('No analysis received from server')
-      }
       
+      if (!data.valid) {
+        setLoading(false)
+        setShowError(true)
+        setValidationMessage(data.message)
+        // Show error cross briefly, then keep the message
+        setTimeout(() => {
+          setShowError(false)
+          setIsInvalidImage(true)
+        }, 1500)
+        return
+      }
+
       // Show success animation briefly before showing analysis
       setLoading(false)
       setShowSuccess(true)
@@ -135,10 +150,16 @@ function App() {
       {imagePreview && (
         <div className="image-preview">
           <img src={imagePreview} alt="Laundry care label" />
-          {(loading || showSuccess) && (
+          {(loading || showSuccess || showError) && (
             <div className="image-overlay">
               {loading && <div className="loading" />}
               {showSuccess && <div className="success-check" />}
+              {showError && <div className="error-cross" />}
+            </div>
+          )}
+          {isInvalidImage && (
+            <div className="error-overlay">
+              <div className="validation-message">{validationMessage}</div>
             </div>
           )}
         </div>

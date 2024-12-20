@@ -11,13 +11,23 @@ load_dotenv()
 
 app = FastAPI()
 
-# Configure CORS
+# Configure CORS - More permissive for development
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://192.168.1.159:5173",  # Your local IP
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://192.168.1.159",  # Your local IP
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your frontend URL
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Initialize OpenAI client

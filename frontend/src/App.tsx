@@ -2,6 +2,9 @@ import { useState, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import './App.css'
 
+// Backend URL using local IP address
+const BACKEND_URL = 'http://192.168.1.159:8000'
+
 function App() {
   const [analysis, setAnalysis] = useState<string>('')
   const [loading, setLoading] = useState(false)
@@ -28,7 +31,7 @@ function App() {
 
     try {
       console.log('Sending request to backend...')
-      const response = await fetch('http://localhost:8000/analyze-label', {
+      const response = await fetch(`${BACKEND_URL}/analyze-label`, {
         method: 'POST',
         body: formData,
       })
@@ -86,7 +89,7 @@ function App() {
         <div className="error">
           <strong>Error:</strong> {error}
           <br />
-          <small>Please make sure the backend server is running at http://localhost:8000</small>
+          <small>Please make sure the backend server is running at {BACKEND_URL}</small>
         </div>
       )}
       

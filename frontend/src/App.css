@@ -5,34 +5,44 @@
   text-align: center;
   width: 100%;
   box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.app-container:only-child {
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+}
+
+.upload-section {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.image-preview {
+  margin-top: 2rem;
 }
 
 .card {
@@ -43,25 +53,50 @@
   color: #888;
 }
 
-.app-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
-  margin-bottom: 2rem;
-}
-
 @media (max-width: 768px) {
   h1 {
     font-size: 2rem;
     margin-bottom: 1.5rem;
+  }
+  
+  .app-container {
+    padding: 0.5rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+  }
+  
+  h1 {
+    color: #ecf0f1;
+  }
+  
+  .image-preview {
+    background-color: #2c3e50;
+  }
+  
+  .image-overlay,
+  .error-overlay,
+  .analysis-overlay {
+    background-color: rgba(44, 62, 80, 0.95);
+  }
+  
+  .validation-message {
+    background-color: rgba(44, 62, 80, 0.95);
+    color: #e74c3c;
+  }
+  
+  .markdown-content {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+  }
+  
+  .markdown-content h2,
+  .markdown-content p {
+    color: #ecf0f1;
   }
 }
 
@@ -76,13 +111,6 @@ h3 {
   color: #34495e;
   margin-bottom: 0.5rem;
   text-align: left;
-}
-
-.upload-section {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 2rem;
 }
 
 button {

@@ -300,6 +300,9 @@ button:hover {
   border-radius: 8px;
   padding: 1.5rem;
   overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .analysis-overlay .markdown-content {
@@ -309,6 +312,8 @@ button:hover {
   width: 100%;
   text-align: left;
   margin: 0;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 .analysis-overlay .markdown-content h2 {
@@ -432,46 +437,4 @@ button:hover {
   border: none;
   border-top: 2px solid #ecf0f1;
   margin: 1.5rem 0;
-}
-
-.validation-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #e74c3c;
-  font-size: 1rem;
-  padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 300px;
-  animation: message-fade-in 0.5s ease-out;
-  z-index: 10;
-}
-
-@keyframes message-fade-in {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -40%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.error-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
 }

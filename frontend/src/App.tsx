@@ -16,11 +16,9 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
-  const [validationMessage, setValidationMessage] = useState('')
   const [error, setError] = useState<string>('')
   const [imagePreview, setImagePreview] = useState<string>('')
   const [isMobile, setIsMobile] = useState(false)
-  const [isInvalidImage, setIsInvalidImage] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
 
@@ -50,9 +48,7 @@ function App() {
     setError('')
     setShowSuccess(false)
     setShowError(false)
-    setValidationMessage('')
     setAnalysis('')
-    setIsInvalidImage(false)
 
     const formData = new FormData()
     formData.append('file', file)
@@ -76,11 +72,10 @@ function App() {
       if (!data.valid) {
         setLoading(false)
         setShowError(true)
-        setValidationMessage(data.message)
-        // Show error cross briefly, then keep the message
+        // Show error cross briefly, then display the message in markdown
         setTimeout(() => {
           setShowError(false)
-          setIsInvalidImage(true)
+          setAnalysis(`## Error\n\n${data.message}`)
         }, 1500)
         return
       }
@@ -163,11 +158,6 @@ function App() {
               {loading && <div className="loading" />}
               {showSuccess && <div className="success-check" />}
               {showError && <div className="error-cross" />}
-            </div>
-          )}
-          {isInvalidImage && (
-            <div className="error-overlay">
-              <div className="validation-message">{validationMessage}</div>
             </div>
           )}
           {analysis && (

@@ -10,6 +10,7 @@ const BACKEND_URL = 'http://192.168.1.159:8000'
 function App() {
   const [analysis, setAnalysis] = useState<string>('')
   const [loading, setLoading] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const [error, setError] = useState<string>('')
   const [imagePreview, setImagePreview] = useState<string>('')
   const [isMobile, setIsMobile] = useState(false)
@@ -40,6 +41,8 @@ function App() {
 
     setLoading(true)
     setError('')
+    setShowSuccess(false)
+    setAnalysis('')
 
     const formData = new FormData()
     formData.append('file', file)
@@ -62,11 +65,18 @@ function App() {
       if (!data.analysis) {
         throw new Error('No analysis received from server')
       }
-      setAnalysis(data.analysis)
+      
+      // Show success animation briefly before showing analysis
+      setLoading(false)
+      setShowSuccess(true)
+      setTimeout(() => {
+        setShowSuccess(false)
+        setAnalysis(data.analysis)
+      }, 1000)
+
     } catch (err) {
       console.error('Error details:', err)
       setError(err instanceof Error ? err.message : 'An error occurred while analyzing the image')
-    } finally {
       setLoading(false)
     }
   }
@@ -113,8 +123,6 @@ function App() {
           </button>
         )}
       </div>
-
-      {loading && <div className="loading" />}
       
       {error && (
         <div className="error">
@@ -127,6 +135,12 @@ function App() {
       {imagePreview && (
         <div className="image-preview">
           <img src={imagePreview} alt="Laundry care label" />
+          {(loading || showSuccess) && (
+            <div className="image-overlay">
+              {loading && <div className="loading" />}
+              {showSuccess && <div className="success-check" />}
+            </div>
+          )}
         </div>
       )}
       

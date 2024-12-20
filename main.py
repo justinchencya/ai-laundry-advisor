@@ -37,6 +37,8 @@ if not api_key:
 
 client = openai.OpenAI(api_key=api_key)
 
+INVALID_IMAGE_MESSAGE = "Sorry, no valid laundry care symbols are identified."
+
 @app.post("/analyze-label")
 async def analyze_label(file: UploadFile):
     try:
@@ -74,7 +76,7 @@ async def analyze_label(file: UploadFile):
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an image validator for laundry care labels. Your task is to determine if the image contains valid laundry care symbols/labels. Respond with only 'valid' or 'invalid', followed by a brief reason."
+                        "content": "You are an image validator for laundry care labels. Your task is to determine if the image contains valid laundry care symbols/labels. Respond with only 'valid' or 'invalid'."
                     },
                     {
                         "role": "user",
@@ -100,7 +102,7 @@ async def analyze_label(file: UploadFile):
             if not validation_result.startswith('valid'):
                 return JSONResponse(content={
                     "valid": False,
-                    "message": validation_result
+                    "message": INVALID_IMAGE_MESSAGE
                 })
 
             # If valid, proceed with the analysis

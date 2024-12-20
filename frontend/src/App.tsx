@@ -11,6 +11,7 @@ function App() {
   const [error, setError] = useState<string>('')
   const [imagePreview, setImagePreview] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -56,20 +57,26 @@ function App() {
     }
   }
 
-  const handleCameraCapture = () => {
-    fileInputRef.current?.click()
-  }
-
   return (
     <div className="app-container">
       <h1>AI Laundry Advisor</h1>
       
       <div className="upload-section">
+        {/* File Upload Input */}
         <input
           type="file"
           accept="image/*"
           onChange={handleFileUpload}
           ref={fileInputRef}
+          style={{ display: 'none' }}
+        />
+        
+        {/* Camera Input */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileUpload}
+          ref={cameraInputRef}
           style={{ display: 'none' }}
           capture="environment"
         />
@@ -78,7 +85,7 @@ function App() {
           Upload Image
         </button>
         
-        <button onClick={handleCameraCapture}>
+        <button onClick={() => cameraInputRef.current?.click()}>
           Take Photo
         </button>
       </div>

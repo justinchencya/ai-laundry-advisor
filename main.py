@@ -11,15 +11,8 @@ load_dotenv()
 
 app = FastAPI()
 
-# Configure CORS - More permissive for development
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://192.168.1.159:5173",  # Your local IP
-    "http://localhost",
-    "http://127.0.0.1",
-    "http://192.168.1.159",  # Your local IP
-]
+# Configure CORS - allow all origins
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,

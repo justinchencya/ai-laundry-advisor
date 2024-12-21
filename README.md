@@ -86,6 +86,8 @@ npm run dev -- --host
 5. On your phone:
    - Open your browser
    - Navigate to `http://your.ip.address:5173`
+      - Port 5173 is the default port for Vite's development server.
+      - Confirm on the actual port number in the terminal output of the frontend server.
    - Allow camera access if you want to take photos
 
 ## Usage

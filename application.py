@@ -9,12 +9,13 @@ import base64
 # Load environment variables
 load_dotenv()
 
-app = FastAPI()
+# Create the FastAPI application instance
+application = app = FastAPI()  # 'application' for Heroku, 'app' for local development
 
 # Configure CORS - allow all origins
 origins = ["*"]
 
-app.add_middleware(
+application.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
@@ -32,7 +33,7 @@ client = openai.OpenAI(api_key=api_key)
 
 INVALID_IMAGE_MESSAGE = "Sorry, no valid laundry care symbols are identified."
 
-@app.post("/analyze-label")
+@application.post("/analyze-label")
 async def analyze_label(file: UploadFile):
     try:
         if not file:
@@ -161,6 +162,12 @@ Format your response using these exact headers, with one bullet point per sectio
             detail=f"Unexpected error: {str(e)}"
         )
 
-@app.get("/health")
+@application.get("/health")
 async def health_check():
-    return {"status": "healthy"} 
+    return {"status": "healthy"}
+
+# Add this for Heroku deployment
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("application:application", host="0.0.0.0", port=port) 

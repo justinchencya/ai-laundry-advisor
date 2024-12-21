@@ -74,7 +74,7 @@ VITE_BACKEND_URL=http://your.ip.address:8000
 
 3. Start the backend server with host access:
 ```bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn application:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 4. Start the frontend server with host access:

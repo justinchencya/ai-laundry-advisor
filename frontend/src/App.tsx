@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import ReactMarkdown from 'react-markdown'
 import { IoCamera } from 'react-icons/io5'
 import { IoImagesOutline } from 'react-icons/io5'
 import './App.css'
@@ -9,6 +8,36 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 if (!BACKEND_URL) {
   throw new Error('VITE_BACKEND_URL is not set in environment variables')
+}
+
+interface AnalysisResult {
+  category: string;
+  instruction: string;
+}
+
+function parseAnalysis(markdownText: string): AnalysisResult[] {
+  if (!markdownText) return [];
+  
+  const lines = markdownText.split('\n');
+  const results: AnalysisResult[] = [];
+  
+  let currentCategory = '';
+  
+  lines.forEach(line => {
+    if (line.startsWith('## ')) {
+      currentCategory = line.replace('## ', '');
+    } else if (line.startsWith('• ')) {
+      const instruction = line.replace('• ', '').replace('[', '').replace(']', '');
+      if (currentCategory && instruction) {
+        results.push({
+          category: currentCategory,
+          instruction: instruction
+        });
+      }
+    }
+  });
+  
+  return results;
 }
 
 function App() {
@@ -72,7 +101,7 @@ function App() {
       if (!data.valid) {
         setLoading(false)
         setShowError(true)
-        // Show error cross briefly, then display the message in markdown
+        // Show error cross briefly, then display the message
         setTimeout(() => {
           setShowError(false)
           setAnalysis(`## Error\n\n${data.message}`)
@@ -94,6 +123,38 @@ function App() {
       setLoading(false)
     }
   }
+
+  const renderAnalysisTable = (analysisText: string) => {
+    // If it's an error message, display it differently
+    if (analysisText.startsWith('## Error')) {
+      return (
+        <div className="error">
+          {analysisText.replace('## Error\n\n', '')}
+        </div>
+      );
+    }
+
+    const results = parseAnalysis(analysisText);
+    
+    return (
+      <table className="analysis-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Instruction</th>
+          </tr>
+        </thead>
+        <tbody>
+          {results.map((result, index) => (
+            <tr key={index}>
+              <td>{result.category}</td>
+              <td>{result.instruction}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
     <div className="app-container">
@@ -162,9 +223,7 @@ function App() {
           )}
           {analysis && (
             <div className="analysis-overlay">
-              <ReactMarkdown className="markdown-content">
-                {analysis}
-              </ReactMarkdown>
+              {renderAnalysisTable(analysis)}
             </div>
           )}
         </div>

@@ -5,12 +5,17 @@ import openai
 import os
 from dotenv import load_dotenv
 import base64
+import datetime
 
 # Load environment variables
 load_dotenv()
 
 # Create the FastAPI application instance
-application = app = FastAPI()  # 'application' for Heroku, 'app' for local development
+application = app = FastAPI(
+    title="AI Laundry Advisor",
+    description="API for analyzing laundry care labels using AI",
+    version="1.0.0"
+)
 
 # Configure CORS - allow all origins
 origins = ["*"]
@@ -32,6 +37,27 @@ if not api_key:
 client = openai.OpenAI(api_key=api_key)
 
 INVALID_IMAGE_MESSAGE = "Sorry, no valid laundry care symbols are identified."
+
+@application.get("/")
+async def root():
+    """Root endpoint to verify the API is running."""
+    return {
+        "status": "online",
+        "message": "Welcome to AI Laundry Advisor API",
+        "endpoints": {
+            "health": "/health",
+            "analyze": "/analyze-label"
+        }
+    }
+
+@application.get("/health")
+async def health_check():
+    """Health check endpoint."""
+    return {
+        "status": "healthy",
+        "version": "1.0.0",
+        "timestamp": datetime.datetime.now().isoformat()
+    }
 
 @application.post("/analyze-label")
 async def analyze_label(file: UploadFile):
@@ -161,10 +187,6 @@ Format your response using these exact headers, with one bullet point per sectio
             status_code=500,
             detail=f"Unexpected error: {str(e)}"
         )
-
-@application.get("/health")
-async def health_check():
-    return {"status": "healthy"}
 
 # Add this for Heroku deployment
 if __name__ == "__main__":

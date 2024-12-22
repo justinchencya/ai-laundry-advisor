@@ -9,6 +9,22 @@
   display: flex;
 }
 
+.app-logo {
+  width: 240px;
+  height: auto;
+  margin-bottom: 2rem;
+  animation: logo-float 3s ease-in-out infinite;
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .app-container {
   max-width: 800px;
   margin: 0 auto;
@@ -31,6 +47,7 @@
 h1 {
   font-size: 2.5rem;
   color: #2c3e50;
+  margin: 0;
   margin-bottom: 2rem;
 }
 
@@ -38,7 +55,7 @@ h1 {
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .image-preview {
@@ -53,6 +70,11 @@ h1 {
   
   .app-container {
     padding: 0.5rem;
+  }
+
+  .app-logo {
+    width: 180px;
+    margin-bottom: 1.5rem;
   }
 }
 

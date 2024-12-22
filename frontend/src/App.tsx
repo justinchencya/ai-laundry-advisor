@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { IoCamera } from 'react-icons/io5'
 import { IoImagesOutline } from 'react-icons/io5'
 import './App.css'
+import logo from './assets/logo.png'
 
 // Backend URL from environment variable
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
@@ -158,6 +159,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <img src={logo} alt="AI Laundry Advisor Logo" className="app-logo" />
       <h1>AI Laundry Advisor</h1>
       
       <div className="upload-section">

@@ -129,7 +129,7 @@ function App() {
     // If it's an error message, display it differently
     if (analysisText.startsWith('## Error')) {
       return (
-        <div className="error">
+        <div className="error-message">
           {analysisText.replace('## Error\n\n', '')}
         </div>
       );
@@ -201,8 +201,8 @@ function App() {
         )}
       </div>
       
-      {error && (
-        <div className="error">
+      {error && !imagePreview && (
+        <div className="error-message">
           <strong>Error:</strong> {error}
           <br />
           <small>Please make sure the backend server is started with the host flag and VITE_BACKEND_URL is set properly in frontend/.env.local.</small>
@@ -214,13 +214,18 @@ function App() {
           <img 
             src={imagePreview} 
             alt="Laundry care label" 
-            className={analysis ? 'blurred' : ''}
+            className={analysis || loading || showSuccess || showError ? 'blurred' : ''}
           />
-          {(loading || showSuccess || showError) && (
+          {(loading || showSuccess || showError || error) && (
             <div className="image-overlay">
               {loading && <div className="loading" />}
               {showSuccess && <div className="success-check" />}
               {showError && <div className="error-cross" />}
+              {error && !loading && !showSuccess && !showError && (
+                <div className="error-message">
+                  {error}
+                </div>
+              )}
             </div>
           )}
           {analysis && (

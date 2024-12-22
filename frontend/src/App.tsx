@@ -235,6 +235,10 @@ function App() {
           )}
         </div>
       )}
+
+      <footer className="footer">
+        © 2024 nerdyStuff
+      </footer>
     </div>
   )
 }

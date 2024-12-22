@@ -12,7 +12,7 @@
 .app-logo {
   width: 240px;
   height: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   animation: logo-float 3s ease-in-out infinite;
 }
 
@@ -44,10 +44,7 @@
   flex: 1;
 }
 
-.app-container::after {
-  flex: 1.5;
-}
-
+/* When there's an image preview, don't center vertically */
 .app-container:has(.image-preview)::before,
 .app-container:has(.image-preview)::after {
   content: none;
@@ -91,58 +88,34 @@ h1 {
   transition: filter 0.5s ease;
 }
 
-.image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  padding: 0;
-}
-
+/* Common overlay styles */
+.image-overlay,
 .analysis-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0;
+}
+
+.image-overlay {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.analysis-overlay {
+  background-color: rgba(255, 255, 255, 0.95);
   overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button:hover {
-  background-color: #2980b9;
-  transform: scale(1.05);
 }
 
 /* Loading, Success, and Error indicators */
-.loading, .success-check, .error-cross {
+.loading,
+.success-check,
+.error-cross {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -263,6 +236,33 @@ button:hover {
   border-bottom: none;
 }
 
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.footer {
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #95a5a6;
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   body {
@@ -294,10 +294,6 @@ button:hover {
   .error-message {
     color: #ff6b6b;
   }
-
-  .footer {
-    color: #7f8c8d;  /* Slightly brighter gray for dark mode */
-  }
 }
 
 @media (max-width: 768px) {
@@ -314,10 +310,4 @@ button:hover {
     width: 180px;
     margin-bottom: 1.5rem;
   }
-}
-
-.footer {
-  padding: 1rem;
-  font-size: 0.8rem;
-  color: #95a5a6;
 }

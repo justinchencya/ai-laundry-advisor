@@ -203,7 +203,7 @@ function App() {
         <div className="error">
           <strong>Error:</strong> {error}
           <br />
-          <small>Please make sure the backend server is running at {BACKEND_URL}</small>
+          <small>Please make sure the backend server is started with the host flag and VITE_BACKEND_URL is set properly in frontend/.env.local.</small>
         </div>
       )}
       

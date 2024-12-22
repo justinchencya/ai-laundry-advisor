@@ -160,7 +160,7 @@ function App() {
   return (
     <div className="app-container">
       <img src={logo} alt="AI Laundry Advisor Logo" className="app-logo" />
-      <h1>AI Laundry Advisor</h1>
+      <h1>AI Laundry Advisor <sup className="beta-tag">Beta</sup></h1>
       
       <div className="upload-section">
         {/* File Upload Input */}

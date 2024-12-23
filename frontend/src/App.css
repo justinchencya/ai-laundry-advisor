@@ -259,8 +259,27 @@ button:hover {
 
 .footer {
   padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   font-size: 0.8rem;
   color: #95a5a6;
+}
+
+.footer-content a {
+  color: #95a5a6;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+  color: #3498db;
 }
 
 /* Dark mode support */
@@ -295,8 +314,8 @@ button:hover {
     color: #ff6b6b;
   }
 
-  .beta-tag {
-    background-color: #2980b9;  /* Slightly darker blue for dark mode */
+  .footer-content a:hover {
+    color: #5dade2;  /* Lighter blue for dark mode */
   }
 }
 

@@ -237,7 +237,11 @@ function App() {
       )}
 
       <footer className="footer">
-        © 2024 nerdyStuff
+        <div className="footer-content">
+          <span>© 2024 nerdyStuff</span>
+          <a href="https://www.nerdystuff.xyz" target="_blank" rel="noopener noreferrer">About Us</a>
+          <a href="https://www.nerdystuff.xyz/pages/contact-us" target="_blank" rel="noopener noreferrer">Contact</a>
+        </div>
       </footer>
     </div>
   )

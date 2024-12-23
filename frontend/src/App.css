@@ -44,7 +44,6 @@
   flex: 1;
 }
 
-/* When there's an image preview, don't center vertically */
 .app-container:has(.image-preview)::before,
 .app-container:has(.image-preview)::after {
   content: none;
@@ -57,12 +56,47 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
+.beta-tag {
+  font-size: 0.3em;
+  background-color: #3498db;
+  color: white;
+  padding: 0.3em 0.5em;
+  border-radius: 3px;
+  margin-left: 0.2em;
+  font-weight: 600;
+  vertical-align: super;
+  text-transform: uppercase;
+  position: relative;
+  top: -0.2em;
+}
+
 .upload-section {
   display: flex;
   gap: 1rem;
   justify-content: center;
   margin: 0;
   margin-bottom: 1.5rem;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
 .image-preview {
@@ -88,7 +122,6 @@ h1 {
   transition: filter 0.5s ease;
 }
 
-/* Common overlay styles */
 .image-overlay,
 .analysis-overlay {
   position: absolute;
@@ -112,7 +145,6 @@ h1 {
   overflow-y: auto;
 }
 
-/* Loading, Success, and Error indicators */
 .loading,
 .success-check,
 .error-cross {
@@ -236,27 +268,6 @@ h1 {
   border-bottom: none;
 }
 
-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button:hover {
-  background-color: #2980b9;
-  transform: scale(1.05);
-}
-
 .footer {
   padding: 1rem;
   width: 100%;
@@ -292,6 +303,10 @@ button:hover {
     color: #ecf0f1;
   }
 
+  .beta-tag {
+    background-color: #2980b9;
+  }
+
   .image-overlay {
     background-color: rgba(44, 62, 80, 0.8);
   }
@@ -315,7 +330,7 @@ button:hover {
   }
 
   .footer-content a:hover {
-    color: #5dade2;  /* Lighter blue for dark mode */
+    color: #5dade2;
   }
 }
 
@@ -333,18 +348,4 @@ button:hover {
     width: 180px;
     margin-bottom: 1.5rem;
   }
-}
-
-.beta-tag {
-  font-size: 0.3em;
-  background-color: #3498db;
-  color: white;
-  padding: 0.3em 0.5em;
-  border-radius: 3px;
-  margin-left: 0.2em;
-  font-weight: 600;
-  vertical-align: super;
-  text-transform: uppercase;
-  position: relative;
-  top: -0.2em;
 }

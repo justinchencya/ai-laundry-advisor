@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import { IoCamera } from 'react-icons/io5'
-import { IoImagesOutline } from 'react-icons/io5'
+import { IoCamera, IoImagesOutline } from 'react-icons/io5'
 import './App.css'
 import logo from './assets/logo.png'
 
-// Backend URL from environment variable
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 if (!BACKEND_URL) {
@@ -21,19 +19,15 @@ function parseAnalysis(markdownText: string): AnalysisResult[] {
   
   const lines = markdownText.split('\n');
   const results: AnalysisResult[] = [];
-  
   let currentCategory = '';
   
   lines.forEach(line => {
     if (line.startsWith('## ')) {
       currentCategory = line.replace('## ', '');
     } else if (line.startsWith('• ')) {
-      const instruction = line.replace('• ', '').replace('[', '').replace(']', '');
+      const instruction = line.replace('• ', '').replace(/[\[\]]/g, '');
       if (currentCategory && instruction) {
-        results.push({
-          category: currentCategory,
-          instruction: instruction
-        });
+        results.push({ category: currentCategory, instruction });
       }
     }
   });
@@ -53,25 +47,15 @@ function App() {
   const cameraInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkDevice = () => {
-      const userAgent = navigator.userAgent.toLowerCase()
-      const isMobileDevice = /mobile|android|ios|iphone|ipad|ipod|windows phone/i.test(userAgent)
-      setIsMobile(isMobileDevice)
-    }
-
-    checkDevice()
+    setIsMobile(/mobile|android|ios|iphone|ipad|ipod|windows phone/i.test(navigator.userAgent.toLowerCase()))
   }, [])
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
 
-    // Create image preview
     const reader = new FileReader()
-    reader.onloadend = () => {
-      setImagePreview(reader.result as string)
-    }
+    reader.onloadend = () => setImagePreview(reader.result as string)
     reader.readAsDataURL(file)
 
     setLoading(true)
@@ -84,7 +68,6 @@ function App() {
     formData.append('file', file)
 
     try {
-      console.log('Sending request to backend...')
       const response = await fetch(`${BACKEND_URL}/analyze-label`, {
         method: 'POST',
         body: formData,
@@ -92,9 +75,7 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
-        throw new Error(
-          errorData.detail || `Server error: ${response.status} ${response.statusText}`
-        )
+        throw new Error(errorData.detail || `Server error: ${response.status} ${response.statusText}`)
       }
 
       const data = await response.json()
@@ -102,7 +83,6 @@ function App() {
       if (!data.valid) {
         setLoading(false)
         setShowError(true)
-        // Show error cross briefly, then display the message
         setTimeout(() => {
           setShowError(false)
           setAnalysis(`## Error\n\n${data.message}`)
@@ -110,7 +90,6 @@ function App() {
         return
       }
 
-      // Show success animation briefly before showing analysis
       setLoading(false)
       setShowSuccess(true)
       setTimeout(() => {
@@ -126,7 +105,6 @@ function App() {
   }
 
   const renderAnalysisTable = (analysisText: string) => {
-    // If it's an error message, display it differently
     if (analysisText.startsWith('## Error')) {
       return (
         <div className="error-message">
@@ -163,7 +141,6 @@ function App() {
       <h1>AI Laundry Advisor <sup className="beta-tag">Beta</sup></h1>
       
       <div className="upload-section">
-        {/* File Upload Input */}
         <input
           type="file"
           accept="image/*"
@@ -172,7 +149,6 @@ function App() {
           style={{ display: 'none' }}
         />
         
-        {/* Camera Input */}
         {isMobile && (
           <input
             type="file"
@@ -222,9 +198,7 @@ function App() {
               {showSuccess && <div className="success-check" />}
               {showError && <div className="error-cross" />}
               {error && !loading && !showSuccess && !showError && (
-                <div className="error-message">
-                  {error}
-                </div>
+                <div className="error-message">{error}</div>
               )}
             </div>
           )}
@@ -239,7 +213,7 @@ function App() {
       <footer className="footer">
         <div className="footer-content">
           <span>© 2024 nerdyStuff</span>
-          <a href="https://www.nerdystuff.xyz" target="_blank" rel="noopener noreferrer">About Us</a>
+          <a href="https://www.nerdystuff.xyz" target="_blank" rel="noopener noreferrer">About us</a>
           <a href="https://www.nerdystuff.xyz/pages/contact-us" target="_blank" rel="noopener noreferrer">Contact</a>
         </div>
       </footer>

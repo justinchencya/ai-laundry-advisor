@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Primary domain sitemap
+Sitemap: https://ailaundryadvisor.com/sitemap.xml
+
+# Alternative domain sitemaps
+Sitemap: https://ailaundryadvisor.app/sitemap.xml
+Sitemap: https://ai-laundry-advisor.vercel.app/sitemap.xml 

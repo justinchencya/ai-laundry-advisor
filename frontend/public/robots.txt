@@ -6,4 +6,4 @@ Sitemap: https://ailaundryadvisor.com/sitemap.xml
 
 # Alternative domain sitemaps
 Sitemap: https://ailaundryadvisor.app/sitemap.xml
-Sitemap: https://ai-laundry-advisor.vercel.app/sitemap.xml 
+Sitemap: https://ai-laundry-advisor-frontend.vercel.app/sitemap.xml 

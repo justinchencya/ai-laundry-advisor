@@ -293,6 +293,16 @@ button:hover {
   color: #3498db;
 }
 
+.app-description {
+  font-size: 1rem;
+  color: #7f8c8d;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  padding: 0 1rem;
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   body {
@@ -301,6 +311,10 @@ button:hover {
   
   h1 {
     color: #ecf0f1;
+  }
+
+  .app-description {
+    color: #95a5a6;
   }
 
   .beta-tag {

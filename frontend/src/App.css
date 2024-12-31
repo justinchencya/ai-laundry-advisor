@@ -289,8 +289,16 @@ button:hover {
   transition: color 0.3s ease;
 }
 
+.footer-content a.coffee-link {
+  color: #ff813f;  /* Buy Me a Coffee brand color */
+}
+
 .footer-content a:hover {
   color: #3498db;
+}
+
+.footer-content a.coffee-link:hover {
+  color: #ff9b66;  /* Lighter version of the brand color */
 }
 
 .app-description {

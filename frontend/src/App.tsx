@@ -218,6 +218,7 @@ function App() {
           <span>© 2024 nerdyStuff</span>
           <a href="https://www.nerdystuff.xyz" target="_blank" rel="noopener noreferrer">About us</a>
           <a href="https://www.nerdystuff.xyz/pages/contact-us" target="_blank" rel="noopener noreferrer">Contact</a>
+          <a href="https://buymeacoffee.com/nerdystuff" target="_blank" rel="noopener noreferrer" className="coffee-link">☕️ Buy me a coffee</a>
         </div>
       </footer>
     </div>

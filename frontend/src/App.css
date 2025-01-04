@@ -302,7 +302,7 @@ button:hover {
 }
 
 .app-description {
-  font-size: 1rem;
+  font-size: 0.8rem;  /* Match footer text size */
   color: #7f8c8d;
   max-width: 600px;
   margin: 0 auto;
@@ -369,5 +369,16 @@ button:hover {
   .app-logo {
     width: 180px;
     margin-bottom: 1.5rem;
+  }
+
+  .app-description {
+    font-size: 0.8rem;  /* Even smaller font on mobile */
+    padding: 0 0.5rem;  /* Reduced padding */
+    white-space: nowrap;  /* Prevent text wrapping */
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 0.8rem;
   }
 }
